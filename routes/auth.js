@@ -20,7 +20,7 @@ router.post('/login', async (req, res) => {
 
     const token = jwt.sign(
       { id: user.id, role: user.role, merchant_id: user.merchant_id },
-      process.env.JWT_SECRET || 'fallback_secret',
+      process.env.JWT_SECRET || 'nuqati_secret_2026',
       { expiresIn: '7d' }
     );
     res.json({ token, role: user.role, merchant_id: user.merchant_id });
@@ -33,6 +33,7 @@ router.post('/register-merchant', async (req, res) => {
     const { email, password, merchant_id, role = 'merchant' } = req.body;
     const hash = await bcrypt.hash(password, 12);
     
+    // تم تصحيح هذا الجزء وحذف العلامات المائلة الخاطئة
     const queryText = 'INSERT INTO admin_users(email, password_hash, merchant_id, role) VALUES($1, $2, $3, $4) RETURNING id, email, role';
     const values = [email, hash, merchant_id, role];
 
